@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import joblib
 import os
+from imblearn.over_sampling import SMOTE
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, roc_auc_score
 
 # Título da aplicação
 st.title("Previsão de Evasão Escolar")
@@ -32,15 +36,9 @@ else:
         'frequencia': [frequencia],
         'nota_media': [nota_media],
         'distancia_escola': [distancia_escola],
-        'situacao_socioeconomica_baixa': [0],  # Inicializar com 0
-        'situacao_socioeconomica_media': [0],  # Inicializar com 0
+        'situacao_socioeconomica_baixa': [1 if situacao_socioeconomica == "baixa" else 0],
+        'situacao_socioeconomica_media': [1 if situacao_socioeconomica == "media" else 0],
     })
-
-    # Atualizar as colunas dummy com base na seleção do usuário
-    if situacao_socioeconomica == "baixa":
-        input_data['situacao_socioeconomica_baixa'] = 1
-    elif situacao_socioeconomica == "media":
-        input_data['situacao_socioeconomica_media'] = 1
 
     # Reordenar as colunas para corresponder ao modelo treinado
     required_columns = ['idade', 'frequencia', 'nota_media', 'distancia_escola', 

@@ -3,3 +3,6 @@ imbalanced-learn
 numpy
 pandas
 streamlit
+fastapi
+uvicorn
+pandas

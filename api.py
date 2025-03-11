@@ -2,10 +2,11 @@
 from fastapi import FastAPI
 import pandas as pd
 import random
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-# Simulando uma massa de dados grande
+# Função para gerar uma massa de dados grande de estudantes
 def generate_student_data(num_students=1000):
     data = {
         'idade': [random.randint(6, 18) for _ in range(num_students)],
@@ -16,14 +17,14 @@ def generate_student_data(num_students=1000):
     }
     return pd.DataFrame(data)
 
-# Endpoint para obter dados de estudantes
+# Endpoint para retornar uma grande massa de dados em JSON
 @app.get("/students/")
-def get_students(num_students: int = 100):
+def get_students(num_students: int = 1000):
     df = generate_student_data(num_students)
-    return df.to_dict(orient="records")
+    return JSONResponse(content=df.to_dict(orient="records"))
 
-# Endpoint para obter dados de um único estudante
+# Endpoint para retornar um único estudante
 @app.get("/student/")
 def get_student():
     df = generate_student_data(1)
-    return df.to_dict(orient="records")[0]
+    return JSONResponse(content=df.to_dict(orient="records")[0])

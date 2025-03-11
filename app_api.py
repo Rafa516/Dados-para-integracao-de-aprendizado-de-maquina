@@ -9,7 +9,7 @@ import requests
 st.title("Previsão de Evasão Escolar")
 
 # URL da API hospedada no Render
-API_URL = "https://evasao-escolar-api.onrender.com"  # Substitua pelo URL da sua API no Render
+API_URL = "https://dados-para-integracao-de-aprendizado-de.onrender.com"  # Substitua pelo URL da sua API no Render
 
 # Função para obter dados da API
 def get_student_data():
